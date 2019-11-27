@@ -1,0 +1,25 @@
+#include <fstream>
+#include <iostream>
+#include <string>
+
+#include "ArgsParser.h"
+#include "CompilerDynamic.h"
+
+const char* DEVectorSource = ${DEVECTOR};
+
+const char* DynamicStripSource = ${DYNAMIC_STRIP};
+
+using namespace std;
+
+int main(int argc, char** argv) {
+    ArgsParser args(argc, argv);
+    args.parse();
+    const char* input = args.inputStr();
+    const char* output = args.outputStr();
+
+    CompilerDynamic c(input, output, DEVectorSource, DynamicStripSource);
+    c.generateCPP();
+    c.generateBinary();
+
+    return 0;
+}
